@@ -6,7 +6,7 @@ import Home from './pages/Home';
 import Error from './pages/Error';
 import Rooms from './pages/Rooms';
 import SingleRoom from './pages/SingleRoom';
-import AddRooms from './pages/AddRooms';
+import EditRoom from './pages/EditRoom';
 
 import Navbar from './components/Navbar';
 
@@ -17,8 +17,8 @@ function App() {
         <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/rooms/" component={Rooms} />
-            <Route exact path="/rooms/:slug" component={SingleRoom} />
-            <Route exact path="/add-room" component={AddRooms} />
+            <Route exact path="/rooms/:path" component={SingleRoom} />
+            <Route exact path="/edit-room" component={EditRoom} />
             <Route component={Error}/>
     </Switch>
     </div>

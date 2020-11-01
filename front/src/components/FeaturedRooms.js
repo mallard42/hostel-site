@@ -1,26 +1,35 @@
 import React, { Component } from 'react';
-
-import { RoomContext } from '../context';
+import axios from 'axios'
 
 import Loading from './Loading';
 import Title from './Title';
 import Room from './Room';
 
 class FeaturedRooms extends Component {
-    static contextType = RoomContext;
     constructor(props){
         super(props);
         this.state = {
-            rooms: [],
-            featuredRoms: [],
-            loading: true
+            featuredRooms: [],
+            loading: false
         }
     }
 
+    componentDidMount() {
+        axios.get("http://localhost:5000/room").then(response => {
+        if (response.data.length > 0){
+            let featuredRooms = response.data.filter(room => room.featured === true);
+            
+            this.setState({
+                featuredRooms: featuredRooms
+            })
+        }
+        console.log(this.state.featuredRooms)
+        });
+    }
 
     render() {
-        const room = this.context.featuredRooms.map((room) => {
-                return <Room key={room.id} room={room} />
+        const room = this.state.featuredRooms.map((room) => {
+                return <Room key={room._id} room={room} />
             })
         
 
@@ -28,7 +37,7 @@ class FeaturedRooms extends Component {
             <section className="featured-rooms">
                 <Title title="Featured Rooms" />
                 <div className="featured-rooms-center">
-                    {this.context.loading ? <Loading /> : room}
+                    {this.state.loading ? <Loading /> : room}
                     
                 </div>
             </section>

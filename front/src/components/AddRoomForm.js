@@ -12,6 +12,7 @@ class AddRoomForm extends Component {
 
         this.state = {
             name: '',
+            path: "single-economy",
             type: 'single room',
             price: 0,
             size: 0,
@@ -36,6 +37,7 @@ class AddRoomForm extends Component {
 
         const room = {
             name: this.state.name,
+            path: this.state.path,
             type: this.state.type,
             price: this.state.price,
             size: this.state.size,
@@ -52,9 +54,9 @@ class AddRoomForm extends Component {
 
     render() {
         return (
-            <div className="room-add">
+            <section className="room-add">
                 <Title title="Add Rooms"/>
-                <section className="room-add-center">
+                <div className="room-add-center">
                     <form onSubmit={this.onSubmit}>
 
                         <div className="form-group">
@@ -104,8 +106,8 @@ class AddRoomForm extends Component {
                         </div>
 
                     </form>
-                </section>
-            </div>
+                </div>
+            </section>
         )
     }
 }

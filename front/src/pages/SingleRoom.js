@@ -12,7 +12,7 @@ class SingleRoom extends Component {
     constructor(props){
         super(props);
         this.state = {
-            slug: this.props.match.params.slug,
+            path: this.props.match.params.path,
             defaultBcg
         };
     }
@@ -24,7 +24,7 @@ class SingleRoom extends Component {
     }
 
     render() {
-        const room = this.context.getRoom(this.state.slug);
+        const room = this.context.getRoom(this.state.path);
         console.log(room)
         if (!room){
             return (

@@ -9,6 +9,7 @@ router.route('/').get((req, res) => {
 
 router.route('/add').post((req, res) => {
     const name = req.body.name;
+    const path = req.body.path;
     const type = req.body.type;
     const price = Number(req.body.price);
     const size = Number(req.body.size);
@@ -18,7 +19,19 @@ router.route('/add').post((req, res) => {
     const featured = req.body.featured;
     const description = req.body.description;
 
-    const newRoom = new Room({name, type, price, size, capacity, pets, breakfast, featured, description });
+    const newRoom = new Room(
+        {
+            name, 
+            path, 
+            type, 
+            price, 
+            size, 
+            capacity, 
+            pets, 
+            breakfast, 
+            featured, 
+            description 
+        });
 
     newRoom.save()
            .then(() => res.json('Room added !'))

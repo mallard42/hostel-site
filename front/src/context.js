@@ -60,9 +60,9 @@ class RoomProvider extends Component {
         return (tempItems);
     }
 
-    getRoom(slug) {
+    getRoom(path) {
         if (this.state.rooms.length > 0){
-            const room = this.state.rooms.find((room) => room.slug === slug);
+            const room = this.state.rooms.find((room) => room.path === path);
             return (room);
         }
     }
