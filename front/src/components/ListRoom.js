@@ -15,12 +15,10 @@ class ListRoom extends Component {
     componentDidMount() {
         axios.get("http://localhost:5000/room").then(response => {
         if (response.data.length > 0){
-            console.log(response.data)
             this.setState({
                 rooms: response.data
             })
         }
-        console.log(this.state.rooms)
         });
     }
 

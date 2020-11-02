@@ -1,30 +1,40 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
-import { RoomContext } from '../context';
+import axios from 'axios'
 
 import defaultBcg from '../images/room-1.jpeg';
 import Banner from '../components/Banner';
-
 import StyledHero from '../components/StyledHero'
 
 class SingleRoom extends Component {
     constructor(props){
         super(props);
         this.state = {
+            rooms: [],
             path: this.props.match.params.path,
             defaultBcg
         };
     }
 
-    static contextType = RoomContext;
-
     componentDidMount(){
+        axios.get("http://localhost:5000/room").then(response => {
+        if (response.data.length > 0){
+            this.setState({
+                rooms: response.data
+            })
+        }
+        });
+    }
 
+    getRoom(path) {
+        if (this.state.rooms.length > 0){
+            const room = this.state.rooms.find((room) => room.path === path);
+            return (room);
+        }
     }
 
     render() {
-        const room = this.context.getRoom(this.state.path);
+        const room = this.getRoom(this.state.path);
         console.log(room)
         if (!room){
             return (
@@ -35,20 +45,25 @@ class SingleRoom extends Component {
             )
         }
         
-        const [mainImg, ...defaultImg] = room.images
+        // const [mainImg, ...defaultImg] = room.images
 
         return (
             <div>
-                <StyledHero img={mainImg || this.state.defaultBcg} >
+                <StyledHero img={this.state.defaultBcg} >
                     <Banner title={`${room.name} rooms`} >
                         <Link to='/rooms' className='btn-primary'>Back to Rooms</Link>
                     </Banner>
                 </StyledHero>
                 <section className="single-room">
                     <div className="single-room-images" >
-                        {defaultImg.map((item, index) => {
+
+                    <img key="1" src={defaultBcg} alt={room.name} />
+                    <img key="2" src={defaultBcg} alt={room.name} />
+                    <img key="3" src={defaultBcg} alt={room.name} />
+
+                        {/* {defaultImg.map((item, index) => {
                             return (<img key={index} src={item} alt={room.name} />)
-                        })}
+                        })} */}
                     </div>
                     <div className="single-room-info">
                         <article className="desc">
@@ -65,14 +80,14 @@ class SingleRoom extends Component {
                         </article>
                     </div>
                 </section>
-                <section className="room-extras">
+                {/* <section className="room-extras">
                     <h3>Extras</h3>
                     <ul className="extras">
                         {room.extras.map((item, index) => {
                             return (<li key={index} >- {item}</li>)
                         })}
                     </ul>
-                </section>
+                </section> */}
              </div>
         )
      }

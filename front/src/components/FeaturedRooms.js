@@ -10,7 +10,7 @@ class FeaturedRooms extends Component {
         super(props);
         this.state = {
             featuredRooms: [],
-            loading: false
+            loading: true
         }
     }
 
@@ -20,10 +20,10 @@ class FeaturedRooms extends Component {
             let featuredRooms = response.data.filter(room => room.featured === true);
             
             this.setState({
-                featuredRooms: featuredRooms
+                featuredRooms: featuredRooms,
+                loading: false
             })
         }
-        console.log(this.state.featuredRooms)
         });
     }
 

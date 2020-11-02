@@ -1,24 +1,41 @@
-import React from 'react';
+import React, { Component } from 'react';
+import axios from 'axios';
 
 import RoomsFilter from './RoomsFilter';
-import RoomsList from './RoomsList';
 import Loading from '../components/Loading';
 
-import { withRoomConsumer } from '../context';
+class RoomContainer extends Component {
+    constructor(props){
+        super(props);
 
-const RoomContainer = ({context}) => {
-    const {loading, sortedRooms, rooms} = context;
+        this.state = {
+            rooms: [],
+            loading: true,
+        }
+    }
 
-    if (loading){
-        return (<Loading />)
+    componentDidMount() {
+        axios.get("http://localhost:5000/room").then(response => {
+        if (response.data.length > 0){
+            this.setState({
+                rooms: response.data,
+                loading: false
+            })
+        }
+        });
     }
         
-    return (
-        <div>
-            <RoomsFilter rooms={rooms} />
-            <RoomsList rooms={sortedRooms} />
-        </div>
-    )
+    render (){
+        if (this.state.loading){
+            return (<Loading />)
+        }
+
+        return (
+            <div>
+                <RoomsFilter rooms={ this.state.rooms } />
+            </div>
+        )
+    }
 }
 
-export default withRoomConsumer(RoomContainer);
+export default RoomContainer;
