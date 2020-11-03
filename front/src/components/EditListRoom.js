@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import RoomsList from '../components/RoomsList';
 
-class ListRoom extends Component {
+class EditListRoom extends Component {
     constructor(props){
         super(props);
 
@@ -25,12 +25,11 @@ class ListRoom extends Component {
     render(){
         return (
             <section>
-                <RoomsList rooms={ this.state.rooms } />
-                coucou
+                <RoomsList rooms={ this.state.rooms } link="Edit" />
             </section>
         )
     }
 
 }
 
-export default ListRoom
+export default EditListRoom

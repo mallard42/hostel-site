@@ -29,7 +29,7 @@ class FeaturedRooms extends Component {
 
     render() {
         const room = this.state.featuredRooms.map((room) => {
-                return <Room key={room._id} room={room} />
+                return <Room key={room._id} room={room} link="Featured" />
             })
         
 

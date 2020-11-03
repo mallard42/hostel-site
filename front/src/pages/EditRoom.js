@@ -4,10 +4,25 @@ import { Link } from 'react-router-dom';
 import Hero from '../components/Hero';
 import Banner from '../components/Banner';
 import AddRoomForm from '../components/AddRoomForm';
-import ListRoom from '../components/ListRoom';
+import EditListRoom from '../components/EditListRoom';
 
 class EditRoom extends Component {
     render() {
+        const room = {
+            name: '',
+            path: "single-economy",
+            type: 'single room',
+            price: 0,
+            size: 0,
+            capacity: 0,
+            pets: false,
+            breakfast: false,
+            featured: false,
+            description: '',
+            extras: ["test", "test2"],
+            images: []
+        }
+
         return (
             <div>
                 <Hero hero="roomsHero">
@@ -15,8 +30,8 @@ class EditRoom extends Component {
                         <Link to='/' className="btn-primary">Return Home</Link>
                     </Banner>
                 </Hero>
-                <AddRoomForm />
-                <ListRoom />
+                <AddRoomForm room={room} status="add"/>
+                <EditListRoom />
             </div>
         )
     }

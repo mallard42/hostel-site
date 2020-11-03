@@ -13,18 +13,19 @@ class AddRoomForm extends Component {
         this.removeExtra = this.removeExtra.bind(this);
 
         this.state = {
-            name: '',
-            path: "single-economy",
-            type: 'single room',
-            price: 0,
-            size: 0,
-            capacity: 0,
-            pets: false,
-            breakfast: false,
-            featured: false,
-            description: '',
-            extras: ["test", "test2"],
-            images: []
+            status: props.status,
+            name: props.room.name,
+            path: props.room.path,
+            type: props.room.type,
+            price: props.room.price,
+            size: props.room.size,
+            capacity: props.room.capacity,
+            pets: props.room.pets,
+            breakfast: props.room.breakfast,
+            featured: props.room.featured,
+            description: props.room.description,
+            extras: props.room.extras,
+            images: props.room.images
         }
     }
 
@@ -56,7 +57,6 @@ class AddRoomForm extends Component {
             const list = [...this.state.extras, ""];
             list.splice(i, 1);
             this.setState({ extras: list });
-            console.log(list)
         }
     }
 
@@ -77,15 +77,22 @@ class AddRoomForm extends Component {
             extras: this.state.extras,
             images: this.state.images
         }
-        console.log(room);
-        axios.post("http://localhost:5000/room/add", room);
-        window.location = '#';
+
+        if (this.state.status === 'add'){
+            axios.post("http://localhost:5000/room/add", room);
+        }
+        
+        if (this.state.status === 'update'){
+            axios.post(`http://localhost:5000/room/update/${room.path}`, room);
+        }
+
+        // window.location = '#';
     }
 
     render() {
         return (
             <section className="room-add">
-                <Title title="Add Rooms"/>
+                <Title title={this.state.status === 'add' ? "Add Rooms" : "Update Room"}/>
                 <div className="room-add-center">
                     <form onSubmit={this.onSubmit}>
 
@@ -146,7 +153,7 @@ class AddRoomForm extends Component {
                         </div>
 
                         <div className="form-group add-btn">
-                                <input type="submit" value="Create New Room" className="btn-primary" />
+                                <input type="submit" value={this.state.status === "add" ? "Create New Room" : "Update Room"} className="btn-primary" />
                         </div>
                     </form>
                 </div>

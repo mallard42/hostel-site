@@ -35,7 +35,6 @@ class SingleRoom extends Component {
 
     render() {
         const room = this.getRoom(this.state.path);
-        console.log(room)
         if (!room){
             return (
             <div className="error"> 
@@ -83,7 +82,7 @@ class SingleRoom extends Component {
                 {/* <section className="room-extras">
                     <h3>Extras</h3>
                     <ul className="extras">
-                        {room.extras.map((item, index) => {
+                        {room.extras.map((item, index) => { 
                             return (<li key={index} >- {item}</li>)
                         })}
                     </ul>
