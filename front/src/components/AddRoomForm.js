@@ -9,6 +9,8 @@ class AddRoomForm extends Component {
   
         this.onSubmit = this.onSubmit.bind(this);
         this.onChangeHandler = this.onChangeHandler.bind(this);
+        this.addExtra = this.addExtra.bind(this);
+        this.removeExtra = this.removeExtra.bind(this);
 
         this.state = {
             name: '',
@@ -20,7 +22,9 @@ class AddRoomForm extends Component {
             pets: false,
             breakfast: false,
             featured: false,
-            description: ''
+            description: '',
+            extras: ["test", "test2"],
+            images: []
         }
     }
 
@@ -30,6 +34,30 @@ class AddRoomForm extends Component {
         const value = target.type === 'checkbox' ? target.checked : target.value;
 
         this.setState({ [name]: value });
+    }
+
+    extraChange(event , i) {
+        const name = event.target.name;
+        const value = event.target.value;
+
+        const list = [...this.state[name]];
+        list[i] = value;
+
+        this.setState({ [name]: list })
+    }
+
+    addExtra() {
+        const list = [...this.state.extras, ""];
+        this.setState({ extras: list });
+    }
+
+    removeExtra(i) {
+        if (this.state.extras.length > 1){
+            const list = [...this.state.extras, ""];
+            list.splice(i, 1);
+            this.setState({ extras: list });
+            console.log(list)
+        }
     }
 
     onSubmit(e){
@@ -45,11 +73,13 @@ class AddRoomForm extends Component {
             pets: this.state.pets,
             breakfast: this.state.breakfast,
             featured: this.state.featured,
-            description: this.state.description
+            description: this.state.description,
+            extras: this.state.extras,
+            images: this.state.images
         }
         console.log(room);
         axios.post("http://localhost:5000/room/add", room);
-        // window.location = '#';
+        window.location = '#';
     }
 
     render() {
@@ -101,10 +131,23 @@ class AddRoomForm extends Component {
                             </div>
                         </div>
                         
+                        <div className="form-group">
+                            {
+                                this.state.extras.map((item, i) => {
+                                    return (
+                                        <div key={i}>
+                                            <input className="form-control" type="text" name="extras" value={item} onChange={event => this.extraChange(event, i)} />
+                                            <input className="btn-primary" type="button" onClick={() => this.removeExtra(i)} value="-" />
+                                        </div>
+                                    )
+                                })
+                            }
+                            <input className="btn-primary" type="button" onClick={this.addExtra} value="+" />
+                        </div>
+
                         <div className="form-group add-btn">
                                 <input type="submit" value="Create New Room" className="btn-primary" />
                         </div>
-
                     </form>
                 </div>
             </section>

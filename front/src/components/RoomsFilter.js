@@ -29,7 +29,6 @@ class RoomsFilter extends Component {
             breakfast: false,
             pets: false
         }
-
     }
 
     componentDidMount(){
@@ -151,8 +150,6 @@ class RoomsFilter extends Component {
         
         <RoomsList rooms={ this.state.sortedRooms }/>
         </div>
-
-        
         )
     }
 }
