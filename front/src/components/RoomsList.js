@@ -2,7 +2,7 @@ import React from 'react'
 
 import Room from './Room'
 
-const RoomsList = ({rooms}) => {
+const RoomsList = ({rooms , link}) => {
     if (rooms.length === 0){
         return (
             <div className="empty-search">
@@ -17,7 +17,7 @@ const RoomsList = ({rooms}) => {
                 {
                     rooms.map(item => {
                         return (
-                            <Room key={item._id} room={item} />
+                            <Room key={item._id} room={item} link={link} />
                         )
                     })
                 }

@@ -1,8 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors')
+const cors = require('cors');
 
-const roomRouter = require('./routes/room')
+const roomRouter = require('./routes/room');
+const typeRouter = require('./routes/type');
+const extrasRouter = require('./routes/extra');
 
 require('dotenv').config()
 
@@ -20,6 +22,8 @@ connection.once('open', () => {
 });
 
 app.use('/room', roomRouter);
+app.use('/type', typeRouter);
+app.use('/extra', extrasRouter);
 
 app.listen(port, () => {
     console.log(`server is running on port: ${port}`)

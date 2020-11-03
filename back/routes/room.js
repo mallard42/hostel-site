@@ -42,21 +42,21 @@ router.route('/add').post((req, res) => {
            .catch(err => res.status(400).json('Error' + err))
 });
 
-router.route('/:path').get((req, res) => {
-    Room.find(req.params.path)
+router.route('/:id').get((req, res) => {
+    Room.find(req.params.id)
         .then(room => res.json(room))
         .catch(err => res.status(400).json('Error' + err))
 });
 
-router.route('/:path').delete((req, res) => {
-    Room.findOneAndDelete(req.params.path)
+router.route('/:id').delete((req, res) => {
+    Room.findOneAndDelete(req.params.id)
         .then(() => res.json('Room deleted !'))
         .catch(err => res.status(400).json('Error' + err))
 });
 
 router.route('/update/:id').post((req, res) => {
     Room.findById(req.params.id)
-        .then(room =>{
+        .then(room => {
             room.name = req.body.name;
             room.type = req.body.type;
             room.price = Number(req.body.price);

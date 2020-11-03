@@ -148,7 +148,7 @@ class RoomsFilter extends Component {
             </form>
         </section>
         
-        <RoomsList rooms={ this.state.sortedRooms }/>
+        <RoomsList rooms={ this.state.sortedRooms } link="Featured" />
         </div>
         )
     }
