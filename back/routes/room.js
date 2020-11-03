@@ -8,8 +8,8 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
-    const name = req.body.name;
-    const path = req.body.path;
+    const name = req.body.name.trim();
+    const path = name.replace(/ /g, "-");
     const type = req.body.type;
     const price = Number(req.body.price);
     const size = Number(req.body.size);
@@ -17,20 +17,24 @@ router.route('/add').post((req, res) => {
     const pets = req.body.pets;
     const breakfast = req.body.breakfast;
     const featured = req.body.featured;
-    const description = req.body.description;
+    const description = req.body.description.trim();
+    const extras = req.body.extras;
+    const images = req.body.images;
 
     const newRoom = new Room(
         {
-            name, 
-            path, 
-            type, 
-            price, 
-            size, 
-            capacity, 
-            pets, 
-            breakfast, 
-            featured, 
-            description 
+            name,
+            path,
+            type,
+            price,
+            size,
+            capacity,
+            pets,
+            breakfast,
+            featured,
+            description,
+            extras,
+            images
         });
 
     newRoom.save()
@@ -38,14 +42,14 @@ router.route('/add').post((req, res) => {
            .catch(err => res.status(400).json('Error' + err))
 });
 
-router.route('/:id').get((req, res) => {
-    Room.findById(req.params.id)
+router.route('/:path').get((req, res) => {
+    Room.find(req.params.path)
         .then(room => res.json(room))
         .catch(err => res.status(400).json('Error' + err))
 });
 
-router.route('/:id').delete((req, res) => {
-    Room.findByIdAndDelete(req.params.id)
+router.route('/:path').delete((req, res) => {
+    Room.findOneAndDelete(req.params.path)
         .then(() => res.json('Room deleted !'))
         .catch(err => res.status(400).json('Error' + err))
 });
