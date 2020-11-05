@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 
 import RoomsList from '../components/RoomsList';
+import Title from './Title';
 
 class EditListRoom extends Component {
     constructor(props){
@@ -25,6 +26,7 @@ class EditListRoom extends Component {
     render(){
         return (
             <section>
+                <Title title="Rooms List" />
                 <RoomsList rooms={ this.state.rooms } link="Edit" />
             </section>
         )

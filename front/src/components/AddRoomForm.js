@@ -14,6 +14,7 @@ class AddRoomForm extends Component {
 
         this.state = {
             status: props.status,
+            _id: props.room._id,
             name: props.room.name,
             path: props.room.path,
             type: props.room.type,
@@ -83,7 +84,7 @@ class AddRoomForm extends Component {
         }
         
         if (this.state.status === 'update'){
-            axios.post(`http://localhost:5000/room/update/${room.path}`, room);
+            axios.post(`http://localhost:5000/room/update/${this.state._id}`, room);
         }
 
         // window.location = '#';

@@ -9,6 +9,7 @@ import EditListRoom from '../components/EditListRoom';
 class EditRoom extends Component {
     render() {
         const room = {
+            _id: "",
             name: '',
             path: "single-economy",
             type: 'single room',

@@ -33,6 +33,8 @@ class Navbar extends Component {
                     <ul className={this.state.isToggleOn? "nav-links show-nav" : "nav-links" }>
                         <li><Link to="/">Home</Link></li>
                         <li><Link to="/rooms">Rooms</Link></li>
+                        <li><Link to="/edit-room">Edit Rooms</Link></li>
+                        <li><Link to="/add-detail">Add Detail</Link></li>
                     </ul>
                 </div>
             </nav>
