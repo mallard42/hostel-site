@@ -25,11 +25,9 @@ class AddType extends Component {
 
         if (this.state.status === 'add') {
             axios.post("http://localhost:5000/type/add", this.state.type);
-            console.log("coucou add")
         }
 
         if (this.state.status === 'update') {
-            console.log("coucou update")
             axios.post("http://localhost:5000/type/update", this.state.type);
         }
     }

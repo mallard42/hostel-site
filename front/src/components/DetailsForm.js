@@ -31,7 +31,7 @@ class DetailsForm extends Component {
         }
         axios.post(`http://localhost:5000/${this.state.formName}/${this.state.status}`, content);
     }
-
+    
     render() {
         return (
             <section>
