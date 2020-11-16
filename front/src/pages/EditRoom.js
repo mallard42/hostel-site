@@ -20,7 +20,7 @@ class EditRoom extends Component {
             breakfast: false,
             featured: false,
             description: '',
-            extras: ["test", "test2"],
+            extras: [""],
             images: []
         }
 

@@ -26,4 +26,10 @@ router.route('/update/:id').post((req, res) => {
     })
 });
 
+router.route('/delete/:id').delete((req, res) => {
+    Type.findByIdAndDelete(req.params.id)
+        .then(() => res.json("Type Deleted !"))
+        .catch((err) => res.json('Error:' + err))
+})
+
 module.exports = router;

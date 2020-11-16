@@ -8,7 +8,7 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
-    const name = req.body.name.trim();
+    const name = req.body.name;
     const path = name.replace(/ /g, "-");
     const type = req.body.type;
     const price = Number(req.body.price);
@@ -17,7 +17,7 @@ router.route('/add').post((req, res) => {
     const pets = req.body.pets;
     const breakfast = req.body.breakfast;
     const featured = req.body.featured;
-    const description = req.body.description.trim();
+    const description = req.body.description;
     const extras = req.body.extras;
     const images = req.body.images;
 

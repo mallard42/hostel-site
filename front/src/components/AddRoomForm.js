@@ -26,7 +26,9 @@ class AddRoomForm extends Component {
             featured: props.room.featured,
             description: props.room.description,
             extras: props.room.extras,
-            images: props.room.images
+            images: props.room.images,
+            alert: false,
+            
         }
     }
 
@@ -87,7 +89,10 @@ class AddRoomForm extends Component {
             axios.post(`http://localhost:5000/room/update/${this.state._id}`, room);
         }
 
-        // window.location = '#';
+        e.preventDefault();
+        this.setState({
+
+        })
     }
 
     render() {

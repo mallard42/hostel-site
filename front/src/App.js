@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {Route, Switch} from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import Home from './pages/Home';
 import Error from './pages/Error';
@@ -14,7 +14,7 @@ import Navbar from './components/Navbar';
 
 function App() {
   return (
-    <div >
+    <div>
         <Navbar />
         <Switch>
             <Route exact path="/" component={Home} />
@@ -24,7 +24,7 @@ function App() {
             <Route exact path='/rooms/edit/:id' component={SingleRoomEdit} />
             <Route exact path='/add-detail' component={AddDetailsRoom} />
             <Route component={Error}/>
-    </Switch>
+        </Switch>
     </div>
   );
 }

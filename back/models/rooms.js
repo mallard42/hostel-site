@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const roomSchema = new Schema({
-    name: { type: String, required: true, unique: true},
+    name: { type: String, required: true, unique: true, trim: true},
     path: { type: String, required: true},
     type: { type: String, required: true },
     price: { type: Number, required: true },
@@ -12,7 +12,7 @@ const roomSchema = new Schema({
     pets: { type: Boolean, required: true },
     breakfast: { type: Boolean, required: true },
     featured: { type: Boolean, required: true },
-    description: { type: String, required: true },
+    description: { type: String, required: true, trim: true},
     extras: { type: [String], required: false },
     images: { type: [String], required: false }
 })

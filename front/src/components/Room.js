@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import defaultImg from '../images/room-1.jpeg';
 
-const Room = ({ room , link}) => {
+const Room = ({ room, link}) => {
     return (
         <article className="room" >
             <div className="img-container">

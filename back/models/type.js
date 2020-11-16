@@ -6,8 +6,7 @@ const typeSchema = new Schema({
         type: String,
         required: true,
         unique: true,
-        trim: true,
-        monlenght: 3
+        trim: true
     }
 })
 
