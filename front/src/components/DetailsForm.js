@@ -14,7 +14,8 @@ class DetailsForm extends Component {
         this.state = {
             formName: props.formName,
             status: props.status,
-            content: "",
+            content: props.content,
+            contentId: props.contentId,
             message: "",
             err: false
         }
@@ -30,32 +31,56 @@ class DetailsForm extends Component {
         e.preventDefault();
 
         const content = {
-            [this.state.formName]: this.state.content 
+            name: this.state.content 
         }
-        axios.post(`http://localhost:5000/${this.state.formName}/${this.state.status}`, content)
+        if (this.state.status === 'add'){
+            axios.post(`http://localhost:5000/${this.state.formName}/add`, content)
              .then(response => this.setState({message: response.data, content: "", err: false}))
              .catch(err => {
                 const message = (err.response.data.indexOf("duplicate key") > -1) ? `The ${this.state.formName} already exists` : err.response.data;
                 this.setState({err: true, message: message});
             });
+        }
+
+        if (this.state.status === 'update'){
+            axios.post(`http://localhost:5000/${this.state.formName}/update/${this.state.contentId}`, content)
+             .then(response => this.setState({message: response.data, err: false}))
+             .catch(err => {
+                const message = (err.response.data.indexOf("duplicate key") > -1) ? `The ${this.state.formName} already exists` : err.response.data;
+                this.setState({err: true, message: message});
+            });
+        }
     }
     
     render() {
         return (
-            <section>
-                <Title title={`Add ${this.state.formName}`} />
-
-                {this.state.message ? <Alert message={this.state.message} status={this.state.err ? "error": "success"} /> : null}
-                <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <label>{`Add ${this.state.formName}`} :</label>
-                        <input type="text" name="content" className="form-control" value={this.state.content} onChange={this.onChangeHandler}></input>
-                    </div>
-                    <div className="form-group add-btn">
-                        <input type="submit" value={`Add ${this.state.formName}`} className="btn-primary" />
-                    </div>
-                </form>
-            </section>
+            <div>
+                <section>
+                    <Title title={`Add ${this.state.formName}`} />
+                    {this.state.message ? <Alert message={this.state.message} 
+                                                 status={this.state.err ? "error": "success"} 
+                                                 /> : null}
+                    <form onSubmit={this.onSubmit}>
+                        <div className="form-group">
+                            <label>{`Add ${this.state.formName}`} :</label>
+                            <input type="text" 
+                                   name="content"
+                                   className="form-control" 
+                                   value={this.state.content}
+                                   onChange={this.onChangeHandler} 
+                                   required
+                            />
+                        </div>
+                        <div className="form-group add-btn">
+                            <input type="submit" 
+                                   value={`Add ${this.state.formName}`} 
+                                   className="btn-primary" 
+                            />
+                        </div>
+                    </form>
+                </section>
+            </div>
+            
         )
     }
 }

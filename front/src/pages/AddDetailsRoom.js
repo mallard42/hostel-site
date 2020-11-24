@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import DetailsForm from '../components/DetailsForm';
 import Hero from '../components/Hero';
 import Banner from '../components/Banner';
-import DetailsList from '../components/DetailsList';
+import DetailsList from '../components/DetailsList'
 
 class AddDetailsRoom extends Component {
     constructor(props){
@@ -22,15 +22,10 @@ class AddDetailsRoom extends Component {
                         <Link to='/' className="btn-primary">Return Home</Link>
                     </Banner>
                 </Hero>
-                <section>
-                    <DetailsForm formName="type" status="add"/>
-                    <DetailsList formName="type"/>
-                </section>
-
-                <section>
-                    <DetailsForm formName="extra" status="add"/>
-                    <DetailsList formName="extra" />
-                </section>
+                <DetailsForm formName="type" status="add" content=""/>
+                <DetailsList formName="type" />
+                <DetailsForm formName="extra" status="add" content=""/>
+                <DetailsList formName="extra" />
             </div>
         )
     }

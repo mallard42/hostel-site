@@ -2,11 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const extraSchema = new Schema({
-    extra: {
+    name: {
         type: String,
         required: true,
-        unique: true,
-        trim: true
+        unique: true
+    },
+    path: {
+        type: String,
+        required: true
     }
 })
 

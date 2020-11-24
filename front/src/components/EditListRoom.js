@@ -8,8 +8,12 @@ class EditListRoom extends Component {
     constructor(props){
         super(props);
 
+        this.deleteRoom = this.deleteRoom.bind(this);
+
         this.state = {
-            rooms: []
+            rooms: [],
+            err: false,
+            message: ""
         }
     }
 
@@ -23,11 +27,20 @@ class EditListRoom extends Component {
         });
     }
 
+    deleteRoom (room) {
+        axios.delete(`http://localhost:5000/room/delete/${room._id}`)
+             .then(response => this.setState({message: response.data, err: false}))
+             .catch(err => {
+                const message = (err.response.data.indexOf("duplicate key") > -1) ? 'The room already exists' : err.response.data;
+                this.setState({message: message, err: true})
+             });
+    };
+
     render(){
         return (
             <section>
                 <Title title="Rooms List" />
-                <RoomsList rooms={ this.state.rooms } link="Edit" />
+                <RoomsList rooms={ this.state.rooms } link="Edit" deleteRoom={this.deleteRoom} />
             </section>
         )
     }

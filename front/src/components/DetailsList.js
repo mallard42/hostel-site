@@ -44,7 +44,8 @@ class DetailsList extends Component {
         return (
             <section>
                 <Title title={`${this.state.formName} List`} />
-                {this.state.alert ? <Alert message={this.state.message} status={this.state.err ? "error": "success"}/>: null}
+                {this.state.alert ? <Alert message={this.state.message} 
+                                           status={this.state.err ? "error": "success"}/>: null}
                 <table>
                     <tbody>
                         {
@@ -52,10 +53,16 @@ class DetailsList extends Component {
                                 return (
                                     <tr key={item._id}>
                                         <td>
-                                            {item[this.state.formName]}
+                                            {item.name}
                                         </td>
-                                        <td><Link className="btn-primary" to="">Edit</Link></td>
-                                        <td><button key={item._id} className="btn-primary" onClick={() => this.deleteDetail(item._id)}>Delete</button></td>
+                                        <td><Link className="btn-primary" to={`/${this.state.formName}/${item.path}`}>Edit</Link></td>
+                                        <td>
+                                            <button key={item._id} 
+                                                    className="btn-primary" 
+                                                    onClick={() => this.deleteDetail(item._id)}>
+                                                Delete
+                                            </button>
+                                        </td>
                                     </tr>
                                 )
                             })
