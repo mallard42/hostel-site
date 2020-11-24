@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import RoomsList from './RoomsList';
 import Title from './Title';
@@ -35,9 +36,13 @@ class RoomsFilter extends Component {
         let maxPrice = Math.max(...this.state.rooms.map(item => item.price));
         let minPrice = Math.min(...this.state.rooms.map(item => item.price));
         let maxSize = Math.max(...this.state.rooms.map(item => item.size));
-        let guestsSelect = getUnique(this.state.rooms, "capacity")
-        let typeSelect = getUnique(this.state.rooms, "type");
-        typeSelect = ['all', ...typeSelect];
+        let guestsSelect = getUnique(this.state.rooms, "capacity");
+        let typeSelect = ["all"];
+
+        axios.get('http://localhost:5000/type').then(response => response.data.map(type => {
+            typeSelect.splice(typeSelect.length, 0, type.name);
+            this.setState({typeSelect: typeSelect})
+        }));
 
         this.setState({
             price: maxPrice,
@@ -45,7 +50,6 @@ class RoomsFilter extends Component {
             minPrice: minPrice,
             maxSize: maxSize,
             guestsSelect: guestsSelect,
-            typeSelect: typeSelect,
         });
     }
 
