@@ -42,7 +42,7 @@ class DetailsList extends Component {
 
     render() {
         return (
-            <section>
+            <section className="detail-list-center">
                 <Title title={`${this.state.formName} List`} />
                 {this.state.alert ? <Alert message={this.state.message} 
                                            status={this.state.err ? "error": "success"}/>: null}

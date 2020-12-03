@@ -37,12 +37,16 @@ class RoomsFilter extends Component {
         let minPrice = Math.min(...this.state.rooms.map(item => item.price));
         let maxSize = Math.max(...this.state.rooms.map(item => item.size));
         let guestsSelect = getUnique(this.state.rooms, "capacity");
-        let typeSelect = ["all"];
 
-        axios.get('http://localhost:5000/type').then(response => response.data.map(type => {
-            typeSelect.splice(typeSelect.length, 0, type.name);
-            this.setState({typeSelect: typeSelect})
-        }));
+        axios.get('http://localhost:5000/type').then(response => {
+            const tmp = ["all"];
+
+            response.data.map(type => {
+                return tmp.splice(tmp.length, 0, type.name);
+            });
+
+            this.setState({typeSelect: tmp})
+        });
 
         this.setState({
             price: maxPrice,

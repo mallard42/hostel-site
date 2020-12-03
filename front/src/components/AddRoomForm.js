@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import Title from '../components/Title';
-import Alert from '../components/Alert';
+import Title from './Title';
+import Alert from './Alert';
+import Form from './Form';
 
 class AddRoomForm extends Component {
     constructor(props) {
         super(props);
-  
+
         this.onSubmit = this.onSubmit.bind(this);
         this.onChangeHandler = this.onChangeHandler.bind(this);
         this.extraHandler = this.extraHandler.bind(this);
+        this.uploadImg = this.uploadImg.bind(this);
+        this.fileInput = React.createRef();
 
         this.state = {
             status: props.status,
@@ -29,32 +32,70 @@ class AddRoomForm extends Component {
             extras: props.room.extras,
             allExtra: [],
             images: props.room.images,
+            file: [],
             err: false,
-            message:""
+            message: ""
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         axios.get('http://localhost:5000/type')
-             .then(response => {
-                if (response.data.length > 0){
+            .then(response => {
+                if (response.data.length > 0) {
                     this.setState({ allType: response.data })
                 }
-             });
+            });
         axios.get('http://localhost:5000/extra')
-             .then(response => {
-                if (response.data.length > 0){
+            .then(response => {
+                if (response.data.length > 0) {
                     this.setState({ allExtra: response.data })
                 }
-             });
+            });
     }
 
     onChangeHandler(event) {
         const target = event.target;
         const name = event.target.name;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
+        let value = target.type === 'checkbox' ? target.checked : target.value;
+
+        if (name === 'file'){
+            value = target.files;
+        }
 
         this.setState({ [name]: value });
+    }
+
+    uploadImg(e) {
+        e.preventDefault();
+        const file = this.state.file;
+        const formData = new FormData();
+
+        for (let i = 0; i < file.length; i++) {
+            formData.append("files", file[i])
+        }
+
+        axios.post('http://localhost:5000/upload', formData)
+            .then(res => {
+                console.log(res.data);
+                // const img = {
+                //     fileName: res.data.fileName, 
+                //     filePath: res.data.filePath
+                // };
+                // const tmpImg = this.state.images;
+                // tmpImg.splice(0, 0, img);
+                // this.setState({images: tmpImg});
+            })
+            .catch(err => {
+                let message = '';
+
+                if(err.response.status === 500) {
+                    message = 'There was a probleme with the server !';
+                }
+                else { 
+                    message = err.response.data.msg;
+                }
+                this.setState({message: message});
+            });
     }
 
     extraHandler(event) {
@@ -64,16 +105,16 @@ class AddRoomForm extends Component {
         const tmpExtra = this.state.extras;
         const i = tmpExtra.indexOf(value);
 
-        if (!checked){
+        if (!checked) {
             tmpExtra.splice(i, 1);
         }
         else {
             tmpExtra.splice(0, 0, value)
         }
-        this.setState({extras: tmpExtra})
+        this.setState({ extras: tmpExtra })
     }
 
-    onSubmit(e){
+    onSubmit(e) {
         e.preventDefault();
         const room = {
             name: this.state.name,
@@ -89,49 +130,48 @@ class AddRoomForm extends Component {
             extras: this.state.extras,
             images: this.state.images
         }
-        if (this.state.status === 'add'){
+        if (this.state.status === 'add') {
             axios.post("http://localhost:5000/room/add", room)
-                 .then(response => this.setState({message: response.data, err: false}))
-                 .catch(err => {
+                .then(response => this.setState({ message: response.data, err: false }))
+                .catch(err => {
                     const message = (err.response.data.indexOf("duplicate key") > -1) ? 'The room already exists' : err.response.data;
-                    this.setState({message: message, err: true})
-                 });
+                    this.setState({ message: message, err: true })
+                });
         }
-        
-        if (this.state.status === 'update'){
+
+        if (this.state.status === 'update') {
             axios.post(`http://localhost:5000/room/update/${this.state._id}`, room)
-                 .then(response => this.setState({message: response.data, err: false}))
-                 .catch(err => this.setState({message: err.response.data, err: true}));
+                .then(response => this.setState({ message: response.data, err: false }))
+                .catch(err => this.setState({ message: err.response.data, err: true }));
         }
     }
 
     render() {
         return (
-            <section className="room-add">
-                <Title title={this.state.status === 'add' ? "Add Rooms" : "Update Room"}/>
-                {this.state.message ? <Alert message={this.state.message} 
-                                             status={this.state.err ? "error": "success"} 
-                                             /> : null}
+            <section className="section-margin">
+                <Title title={this.state.status === 'add' ? "Add Rooms" : "Update Room"} />
+                {this.state.message ? <Alert message={this.state.message}
+                    status={this.state.err ? "error" : "success"}
+                /> : null}
                 <div className="room-add-center">
-                    <form onSubmit={this.onSubmit}>
+                    <form>
 
-                        <div className="form-group">
-                            <label>Room Name:</label>
-                            <input type="text" 
-                                   name="name"
-                                   className="form-control"
-                                   value={this.state.name}
-                                   onChange={this.onChangeHandler}
-                                   required
-                            />
-                        </div>
+                        <Form
+                            type="text"
+                            className="form-control margin-bottom"
+                            name="name"
+                            value={this.state.name}
+                            onChange={this.onChangeHandler}
+                            label="Room name"
+                            required={true}
+                        />
 
                         <div className="form-group">
                             <label>Room Type:</label>
-                            <select name="type" 
-                                    value={this.state.type}
-                                    className="form-control" 
-                                    onChange={this.onChangeHandler}
+                            <select name="type"
+                                value={this.state.type}
+                                className="form-control margin-bottom"
+                                onChange={this.onChangeHandler}
                             >
                                 {
                                     this.state.allType.map(type => {
@@ -141,110 +181,112 @@ class AddRoomForm extends Component {
                             </select>
                         </div>
 
-                        <div className="form-group">
-                            <label>Room Price:</label>
-                            <input type="number"
-                                   name="price"
-                                   className="form-control"
-                                   value={this.state.price}
-                                   onChange={this.onChangeHandler}
-                                   required
+                        <Form type="number"
+                            name="price"
+                            className="form-control margin-bottom"
+                            value={this.state.price}
+                            onChange={this.onChangeHandler}
+                            required={true}
+                            label="Room price"
+                        />
+
+                        <Form type="number"
+                            className="form-control margin-bottom"
+                            name="size"
+                            value={this.state.size}
+                            onChange={this.onChangeHandler}
+                            required={true}
+                            label="Room size"
+                        />
+
+                        <Form type="number"
+                            className="form-control margin-bottom"
+                            name="capacity"
+                            value={this.state.capacity}
+                            onChange={this.onChangeHandler}
+                            required={true}
+                            label="Room capacity"
+                        />
+
+                        <Form type="text"
+                            className="form-control margin-bottom"
+                            name="description"
+                            value={this.state.description}
+                            onChange={this.onChangeHandler}
+                            required={true}
+                            label="Room description"
+                        />
+
+
+                        <div className="room-add-option margin-bottom">
+                            <Form type="checkbox"
+                                name="breakfast"
+                                value={this.state.breakfast}
+                                onChange={this.onChangeHandler}
+                                label="Breakfast"
+                            />
+
+                            <Form type="checkbox"
+                                name="featured"
+                                value={this.state.featured}
+                                onChange={this.onChangeHandler}
+                                label="Featured room"
+                            />
+                            <Form type="checkbox"
+                                name="pets"
+                                value={this.state.pets}
+                                onChange={this.onChangeHandler}
+                                label="Pets"
                             />
                         </div>
 
-                        <div className="form-group">
-                            <label>Room Size:</label>
-                            <input type="number"
-                                   name="size"
-                                   className="form-control"
-                                   value={this.state.size}
-                                   onChange={this.onChangeHandler}
-                                   required
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label>Room Capacity:</label>
-                            <input type="number" 
-                                   name="capacity"
-                                   className="form-control"
-                                   value={this.state.capacity}
-                                   onChange={this.onChangeHandler}
-                                   required
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label>Room Description:</label>
-                            <input type="text"
-                                   name="description"
-                                   className="form-control"
-                                   value={this.state.description}
-                                   onChange={this.onChangeHandler}
-                                   required
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <div className="room-add-extra">
-                                <input type="checkbox" 
-                                       name="breakfast"
-                                       className="form-control"
-                                       value={this.state.breakfast}
-                                       onChange={this.onChangeHandler}
-                                />
-                                <label>Room breakfast</label>
-                            </div>
-
-                            <div className="room-add-extra">
-                                <input type="checkbox" 
-                                       name="featured" 
-                                       className="form-control" 
-                                       value={this.state.featured} 
-                                       onChange={this.onChangeHandler}
-                                />
-                                <label>Room Featured</label>
-                            </div>
-
-                            <div className="room-add-extra">
-                                <input type="checkbox" 
-                                       name="pets"
-                                       className="form-control"
-                                       value={this.state.pets}
-                                       onChange={this.onChangeHandler}
-                                />
-                                <label>Room Pets</label>
-                            </div>
-                        </div>
-                        
-                        <div className="form-group">
+                        <div className="form-group margin-bottom">
                             {
                                 this.state.allExtra.map(extra => {
                                     return (
-                                    <div className="" key={extra._id}>
-                                        <input type="checkbox" 
-                                               name="extra"
-                                               className="form-control"
-                                               value={extra.name}
-                                               onChange={this.extraHandler}
-                                        />
-                                        <label>{extra.name}</label>
-                                    </div>
-                                    ) 
+                                        <div className="room-add-extra" key={extra._id}>
+                                            <input type="checkbox"
+                                                name="extra"
+                                                className="margin-bottom"
+                                                value={extra.name}
+                                                onChange={this.extraHandler}
+                                            />
+                                            <label>{extra.name}</label>
+                                            <br/>
+                                        </div>
+                                    )
                                 })
-                                
+
                             }
                         </div>
 
-                        <div className="form-group add-btn">
-                                <input type="submit" 
-                                       value={this.state.status === "add" ? "Create New Room" : "Update Room"} 
-                                       className="btn-primary" 
-                                />
+                        <div className="form-group">
+                            <div className="custom-file">
+                                <label>Room Images:</label>
+                                <input name="file" multiple type="file" onChange={this.onChangeHandler} />
+                            </div>
+                            <button onClick={this.uploadImg} className="btn btn-primary">Upload</button>
+                            {
+                                this.state.images.map(img => {
+                                    return <img src={img.filePath} alt={img.name}/>
+                                })
+                            }
                         </div>
+                            
+
+                        <div className="form-group add-btn">
+                            <button type="submit"
+                                onClick={this.onSubmit}
+                                className="btn-primary"
+                            >{this.state.status === "add" ? "Create New Room" : "Update Room"}</button>
+                        </div>
+                        
                     </form>
+
+                    
+
                 </div>
-            </section>
+            </section >
         )
     }
 }

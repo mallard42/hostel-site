@@ -86,6 +86,12 @@ h6 {
   padding: 1rem;
   letter-spacing: var(--mainSpacing);
 }
+
+.section-margin {
+  margin-top: 3em !important;
+  margin-bottom: 5em !important;
+}
+
 /* end of globals */
 /* Navbar */
 .navbar {
@@ -133,7 +139,7 @@ h6 {
 }
 
 .show-nav {
-  height: 100px;
+  height: 250px;
 }
 @media screen and (min-width: 768px) {
   .nav-btn {
@@ -339,6 +345,16 @@ h6 {
   transform: scale(0);
   transition: all 0.3s linear;
 }
+.room-link-edit {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: scale(0);
+  transition: all 0.3s linear;
+}
+.room-delete {
+  top: 30% !important;
+}
 .img-container:hover {
   background: rgba(0, 0, 0, 0.8);
 }
@@ -348,7 +364,7 @@ h6 {
 .img-container:hover .price-top {
   opacity: 0;
 }
-.img-container:hover .room-link {
+.img-container:hover .room-link, .img-container:hover .room-link-edit {
   transform: translate(-50%, -50%) scale(1);
 }
 .room-info {
@@ -514,13 +530,33 @@ h6 {
 }
 /* end of rooms fitler */
 
-/* end of room form */
+/* end of rooms form */
 
 .room-add-extra {
   display: inline !important;
   font-size: 0.8rem;
   margin-left: 0.5rem;
   margin-bottom: 8.5rem;
+}
+
+.margin-bottom {
+  margin-bottom: 1.5em;
+}
+
+.room-add-option {
+  display: flex !important;
+  justify-content: space-between;
+}
+
+.room-add-option label {
+  display: inline-block;
+  margin-right: 1em;
+}
+
+.room-add-extra label{
+  display: inline-block;
+  margin-left: 1em;
+  font-size: 1rem;
 }
 
 .form-group .room-add-extra {
@@ -541,11 +577,6 @@ h6 {
   grid-column-gap: 50px;
 }
 
-.add-btn{
-  display: grid;
-  align-content: center;
-}
-
 @media screen and (min-width: 992px) {
   .room-add-center {
     width: 95vw;
@@ -553,4 +584,33 @@ h6 {
   }
 }
 
+.add-btn{
+  display: grid;
+  align-content: center;
+}
+
 /* end of rooms form */
+/* detail form */
+
+.detail-add-center {
+  width: 90vw;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+  grid-row-gap: 2rem;
+  grid-column-gap: 50px;
+}
+
+@media screen and (min-width: 992px) {
+  .detail-add-center {
+    width: 95vw;
+    max-width: 1170px;
+  }
+}
+
+.detail-list-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* end of detail form */

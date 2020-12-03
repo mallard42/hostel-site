@@ -22,10 +22,14 @@ class AddDetailsRoom extends Component {
                         <Link to='/' className="btn-primary">Return Home</Link>
                     </Banner>
                 </Hero>
-                <DetailsForm formName="type" status="add" content=""/>
-                <DetailsList formName="type" />
-                <DetailsForm formName="extra" status="add" content=""/>
-                <DetailsList formName="extra" />
+                <div className="section-margin detail-add-center">
+                    <DetailsForm formName="type" status="add" content=""/>
+                    <DetailsList formName="type" />
+                </div>
+                <div className="section-margin detail-add-center">
+                    <DetailsForm formName="extra" status="add" content=""/>
+                    <DetailsList formName="extra" />
+                </div>
             </div>
         )
     }

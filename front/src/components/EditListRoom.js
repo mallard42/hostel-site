@@ -38,7 +38,7 @@ class EditListRoom extends Component {
 
     render(){
         return (
-            <section>
+            <section className="section-margin">
                 <Title title="Rooms List" />
                 <RoomsList rooms={ this.state.rooms } link="Edit" deleteRoom={this.deleteRoom} />
             </section>
