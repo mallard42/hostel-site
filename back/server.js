@@ -39,13 +39,13 @@ app.post("/upload", (req, res) => {
             return res.json(req.fileValidationError);
         }
         else if (!req.files) {
-            return res.json('Please select an image to upload');
+            return res.status(400).json('Please select an image to upload');
         }
         else if (err instanceof multer.MulterError) {
-            return res.json(err);
+            return res.status(500).json(err);
         }
         else if (err) {
-            return res.json(err);
+            return res.status(500).json(err);
         }
 
         let tabFiles = [];
@@ -54,32 +54,18 @@ app.post("/upload", (req, res) => {
         if (files.length === undefined){
             const name = "image-" + Date.now() + "-" + files.name;
             files.mv(`${__dirname}/../front/public/uploads/${name}`, );
-            console.log("single");
-            return res.json([{ name: name, path: `/uploads/${name}` }]);
+            return res.json([`/uploads/${name}`]);
         }
         else{
             files.map(item => {
                 const name = "image-" + Date.now() + "-" + item.name;
                 item.mv(`../front/public/uploads/${name}`);
-                tabFiles.splice(0, 0, { name: name, path: `/uploads/${name}`});
+                tabFiles.splice(0, 0, `/uploads/${name}`);
             });
             return res.json(tabFiles);
         }
      });
 });
-
-// app.post('/upload', (req, res) => {
-//     if (req.files === null){
-//         return res.status(400).json({ msg: 'No file uploaded !' });
-//     }
-
-//     const files = req.files.file;
-//     const tabFiles = [];
-
-//     console.log(files)
-    
-//     console.log("coucou")
-// });
 
 const url = process.env.ATLAS_URL;
 mongoose.connect(url, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })

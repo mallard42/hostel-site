@@ -39,12 +39,17 @@ router.route('/add').post((req, res) => {
 
     newRoom.save()
            .then(() => res.json('Room added !'))
-           .catch(err => res.status(400).json('Error' + err))
+           .catch(err => {
+                res.status(400).json('Error' + err)
+                console.log(err)
+            })
 });
 
 router.route('/:path').get((req, res) => {
-    Type.find({path: req.params.path})
-        .then(response => res.json(response))
+    Room.find({path: req.params.path})
+        .then(response => {
+            console.log(response)
+            res.json(response)})
         .catch(err => res.status(400).json('Error:' + err))
 });
 
@@ -67,6 +72,8 @@ router.route('/update/:id').post((req, res) => {
             room.breakfast = req.body.breakfast;
             room.featured = req.body.featured;
             room.description = req.body.description;
+            room.images = req.body.images;
+            room.extras = req.body.extras;
 
             room.save()
                 .then(() => res.json('Room updated !'))
