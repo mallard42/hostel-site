@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import Logo from '../images/logo.svg'
-import {FaAlignRight} from 'react-icons/fa'
-import {Link} from 'react-router-dom'
+import React, { Component } from 'react';
+import Logo from '../images/logo.svg';
+import { FaAlignRight } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 class Navbar extends Component {
     constructor(props) {
@@ -31,10 +31,10 @@ class Navbar extends Component {
                         </button>
                     </div>
                     <ul className={this.state.isToggleOn? "nav-links show-nav" : "nav-links" }>
-                        <li><Link to="/">Home</Link></li>
-                        <li><Link to="/rooms">Rooms</Link></li>
-                        <li><Link to="/edit-room">Edit Rooms</Link></li>
-                        <li><Link to="/add-detail">Add Detail</Link></li>
+                        <li><Link to="/" onClick={this.handleClick}>Home</Link></li>
+                        <li><Link to="/rooms" onClick={this.handleClick}>Rooms</Link></li>
+                        <li><Link to="/edit-room" onClick={this.handleClick}>Edit Rooms</Link></li>
+                        <li><Link to="/add-detail" onClick={this.handleClick}>Add Detail</Link></li>
                     </ul>
                 </div>
             </nav>

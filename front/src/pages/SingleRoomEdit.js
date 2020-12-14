@@ -11,30 +11,24 @@ class SingleRoomEdit extends Component {
         super(props);
 
         this.state = {
-            rooms: [],
+            rooms: "",
             path: props.match.params.id
         }
     }
 
     componentDidMount() {
-        axios.get("http://localhost:5000/room").then(response => {
+        axios.get(`http://localhost:5000/room/${this.state.path}`).then(response => {
         if (response.data.length > 0){
             this.setState({
                 rooms: response.data
             })
         }
+        console.log(this.state)
         });
     }
 
-    getRoom(path) {
-        if (this.state.rooms.length > 0){
-            const room = this.state.rooms.find((room) => room.path === path);
-            return (room);
-        }
-    }
-
     render() {
-        const room = this.getRoom(this.state.path);
+        const room = this.state.rooms[0];
         if (!room){
             return (
             <div className="error"> 

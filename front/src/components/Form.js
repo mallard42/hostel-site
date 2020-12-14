@@ -2,8 +2,8 @@ import React from 'react'
 
 const Form = ({ type, name, value, onChange, label, required, className }) => {
     return (
-        <div className="form-group">
-            <label>{label}:</label>
+        <div className="room-add-form">
+            <label >{label}:</label>
             <input type={type}
                 name={name}
                 className={className}

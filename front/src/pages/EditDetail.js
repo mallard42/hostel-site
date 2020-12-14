@@ -48,11 +48,14 @@ class EditDetail extends Component {
                         <Link to='/add-detail' className="btn-primary">Add Detail</Link>
                     </Banner>
                 </Hero>
-                <DetailsForm content={this.state.content} 
-                             contentId={this.state.contentId} 
-                             status="update"
-                             formName={this.state.type}
+                <section className="section-margin detail-add-center">
+                    <DetailsForm content={this.state.content} 
+                                contentId={this.state.contentId} 
+                                status="update"
+                                formName={this.state.type}
+                                contentList={[]}
                 />
+                </section>
             </div>
         )
     }

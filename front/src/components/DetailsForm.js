@@ -71,10 +71,10 @@ class DetailsForm extends Component {
                                    required
                             />
                         </div>
-                        <div className="form-group add-btn">
+                        <div className="form-group detail-add-button">
                             <input type="submit" 
                                    value={`Add ${this.state.formName}`} 
-                                   className="btn-primary" 
+                                   className="btn-primary detail-button-center" 
                             />
                         </div>
                     </form>

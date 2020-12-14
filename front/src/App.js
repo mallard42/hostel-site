@@ -10,8 +10,11 @@ import EditRoom from './pages/EditRoom';
 import SingleRoomEdit from './pages/SingleRoomEdit';
 import AddDetailsRoom from './pages/AddDetailsRoom';
 import EditDetail from './pages/EditDetail';
+import LegalNotice from './pages/LegalNotice';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -25,8 +28,11 @@ function App() {
             <Route exact path='/rooms/edit/:id' component={SingleRoomEdit} />
             <Route exact path='/add-detail' component={AddDetailsRoom} />
             <Route exact path='/:type/:id' component={EditDetail}></Route>
+            <Route exact path='/legal-notice' component={LegalNotice}></Route>
+            <Route exact path='/privacy-policy' component={PrivacyPolicy}></Route>
             <Route component={Error}/>
         </Switch>
+        <Footer />
     </div>
   );
 }

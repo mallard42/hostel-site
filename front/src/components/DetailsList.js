@@ -44,31 +44,22 @@ class DetailsList extends Component {
         return (
             <section className="detail-list-center">
                 <Title title={`${this.state.formName} List`} />
-                {this.state.alert ? <Alert message={this.state.message} 
-                                           status={this.state.err ? "error": "success"}/>: null}
-                <table>
-                    <tbody>
+                {this.state.alert ? <Alert message={this.state.message} status={this.state.err ? "error": "success"}/>: null}
                         {
                             this.state.content.map(item => {
                                 return (
-                                    <tr key={item._id}>
-                                        <td>
-                                            {item.name}
-                                        </td>
-                                        <td><Link className="btn-primary" to={`/${this.state.formName}/${item.path}`}>Edit</Link></td>
-                                        <td>
-                                            <button key={item._id} 
-                                                    className="btn-primary" 
-                                                    onClick={() => this.deleteDetail(item._id)}>
+                                    <div key={item._id} className="detail-list">
+                                        <div className="detail-name"> {item.name} </div>
+                                        <div className="detail-button-container">
+                                            <Link className="btn-primary detail-button" to={`/${this.state.formName}/${item.path}`}>Edit</Link>
+                                            <button key={item._id} className="btn-primary detail-button" onClick={() => this.deleteDetail(item._id)}>
                                                 Delete
                                             </button>
-                                        </td>
-                                    </tr>
+                                        </div>
+                                    </div>
                                 )
                             })
                         }
-                    </tbody>
-                </table>
             </section>
         )
     }

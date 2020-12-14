@@ -23,11 +23,11 @@ class AddDetailsRoom extends Component {
                     </Banner>
                 </Hero>
                 <div className="section-margin detail-add-center">
-                    <DetailsForm formName="type" status="add" content=""/>
+                    <DetailsForm formName="type" status="add" content="" />
                     <DetailsList formName="type" />
                 </div>
                 <div className="section-margin detail-add-center">
-                    <DetailsForm formName="extra" status="add" content=""/>
+                    <DetailsForm formName="extra" status="add" content="" />
                     <DetailsList formName="extra" />
                 </div>
             </div>

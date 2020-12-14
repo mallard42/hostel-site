@@ -44,11 +44,11 @@ class SingleRoom extends Component {
             )
         }
         
-        // const [mainImg, ...defaultImg] = room.images
+        const [mainImg, ...defaultImg] = room.images ? room.images : [defaultBcg] ;
 
         return (
             <div>
-                <StyledHero img={this.state.defaultBcg} >
+                <StyledHero img={mainImg} >
                     <Banner title={`${room.name} rooms`} >
                         <Link to='/rooms' className='btn-primary'>Back to Rooms</Link>
                     </Banner>
@@ -56,13 +56,10 @@ class SingleRoom extends Component {
                 <section className="single-room">
                     <div className="single-room-images" >
 
-                    <img key="1" src={defaultBcg} alt={room.name} />
-                    <img key="2" src={defaultBcg} alt={room.name} />
-                    <img key="3" src={defaultBcg} alt={room.name} />
-
-                        {/* {defaultImg.map((item, index) => {
+                    {defaultImg.map((item, index) => {
                             return (<img key={index} src={item} alt={room.name} />)
-                        })} */}
+                    })}
+                    
                     </div>
                     <div className="single-room-info">
                         <article className="desc">
@@ -79,14 +76,14 @@ class SingleRoom extends Component {
                         </article>
                     </div>
                 </section>
-                {/* <section className="room-extras">
+                <section className="room-extras">
                     <h3>Extras</h3>
                     <ul className="extras">
                         {room.extras.map((item, index) => { 
                             return (<li key={index} >- {item}</li>)
                         })}
                     </ul>
-                </section> */}
+                </section>
              </div>
         )
      }
