@@ -23,7 +23,6 @@ class SingleRoomEdit extends Component {
                 rooms: response.data
             })
         }
-        console.log(this.state)
         });
     }
 

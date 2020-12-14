@@ -3,7 +3,7 @@ import { Alert } from '@material-ui/lab';
 
 const AlertForm = ({ message, status }) => {
     return (
-        <Alert severity={status} variant="outlined">
+        <Alert className="margin-bottom" severity={status} variant="outlined">
             {message}
         </Alert>
     )

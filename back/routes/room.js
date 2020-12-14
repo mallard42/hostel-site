@@ -47,9 +47,7 @@ router.route('/add').post((req, res) => {
 
 router.route('/:path').get((req, res) => {
     Room.find({path: req.params.path})
-        .then(response => {
-            console.log(response)
-            res.json(response)})
+        .then(response => res.json(response))
         .catch(err => res.status(400).json('Error:' + err))
 });
 

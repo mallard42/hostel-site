@@ -52,7 +52,6 @@ class AddRoomForm extends Component {
                     this.setState({ allExtra: response.data })
                 }
             });
-        console.log(this.state)
     }
 
     onChangeHandler(event) {
@@ -86,7 +85,7 @@ class AddRoomForm extends Component {
                         tmpImg = [data[i]];
                     }
                     else {
-                        tmpImg.splice(0, 0, data[i]);
+                        tmpImg.splice(tmpImg.length, 0, data[i]);
                     }
                 }
                 this.setState({ images: tmpImg, messageImg: "" });
@@ -118,7 +117,6 @@ class AddRoomForm extends Component {
             tmpExtra.splice(0, 0, value)
         }
         this.setState({ extras: tmpExtra })
-        console.log(this.state.extras);
     }
 
     onSubmit(e) {
